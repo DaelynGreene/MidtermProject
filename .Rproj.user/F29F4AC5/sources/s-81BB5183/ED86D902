@@ -3,7 +3,7 @@
     "path": "~/GitHub/GroupProject2Group12/Merged Dashboard/server.R",
     "project_path": null,
     "type": "r_source",
-    "hash": "667364561",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1647354399301.0,
@@ -11,7 +11,9 @@
     "relative_order": 2,
     "properties": {
         "source_window_id": "",
-        "Source": "Source"
+        "Source": "Source",
+        "cursorPosition": "6,4",
+        "scrollLine": "0"
     },
     "folds": "",
     "lastKnownWriteTime": 1647060161,

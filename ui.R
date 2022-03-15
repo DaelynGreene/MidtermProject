@@ -2,7 +2,13 @@ ui <- dashboardPage(
   dashboardHeader("Daelyn Greene 475 Midterm"),
   dashboardSidebar(
     sidebarMenu(
-      menuItem("How to Use")
+      menuItem("How to Use",tabName = "Tab1")
+    )
+  ),
+  
+  dashboardBody(
+   tabItem(tabName = "Tab1",
+                     actionButton("the","the")
     )
   )
   
