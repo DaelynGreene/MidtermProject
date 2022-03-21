@@ -1,0 +1,18 @@
+library(dplyr)
+library(plotly)
+library(xts)
+library(lubridate)
+library(quantmod)
+
+
+getSymbols('VTRS')       
+SIXTYBACK <- tail(date(VTRS),1) - days(60)
+SIXTYBACK
+DATES <- seq.Date( SIXTYBACK, length=10, by='1 day' )
+DATES
+VALUES <- which(date(VTRS) %in% DATES)
+VALUES
+DIF <- as.numeric(tail(VTRS$VTRS.Close,1)) / VTRS$VTRS.Close[VALUES][1]
+DIF
+PERCENT_CHANGE  <- (as.numeric(DIF) - 1) * 100
+PERCENT_CHANGE

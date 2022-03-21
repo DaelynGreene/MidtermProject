@@ -1,0 +1,213 @@
+---
+title: "Homework 6 - Clustering"
+author: "your name"
+date: "Due Tuesday March 22, 11:59 PM"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+#Do not change anything in this chunk
+options(width=150)
+knitr::opts_chunk$set(echo = TRUE,collapse=TRUE)
+```
+
+```{r}
+## Do not change code here.
+## Use the DATA_HW6 data set to answer questions in this homework
+library(regclass)
+data(SURVEY09)
+DATA_HW6 <- SURVEY09[ , c(11, 13, 15, 29, 30)]
+DATA_HW6 <- na.omit(DATA_HW6)
+```
+
+Use `DATA_HW6` for all questions in this homework.
+
+
+*************************
+
+**Question 1:**  KMeans Clustering.
+
+
+1) We need to scale variable values before performing the clustering analysis. This is because variables that have the *most variation* in its values would dominate the distance measure.
+
+From output of `summary(DATA_HW6)`, which one variable will dominate the distance measure if we do not scale them?
+
+```{r}
+summary(DATA_HW6)
+```
+
+**Response :  **  
+
+**Grading:**  1 pt. 
+
+
+*************
+
+2). Write a for loop to scale all variables in `DATA_HW6` and save the scaled data in `DATA_HW6_scale`. 
+
+After scaling, you should see all variables in `DATA_HW6_salce` have mean value 0 and much smaller range between their max and min values.
+
+Change the column names of DATA_HW6_scale to `c("GPA", "HrsStudy", "FbF", "FBGames", "HrsWorkOut")`.
+
+```{r}
+DATA_HW6_scale <- DATA_HW6
+
+# Your for loop here: (2 pt)
+
+
+# Change the column names: ( 1 pt)
+
+
+summary(DATA_HW6_scale)
+```
+
+
+**Grading:**  3 pts.
+
+*************
+
+3)  Let's try k-means clustering.  Produce the "elbow plot" exploring values of `k` from 1 to 20 taking `iter.max=30` and `nstart=25`.
+
+```{r Q3 auditioning k}
+set.seed(2022)
+# Your code here:
+# possible.k <- ?
+# WCSS <- ?  #Initialize a vector to store the within-cluster sum of squares for each value of k
+
+#for( ?) {   
+#  WCSS[k] <- ?
+#}
+
+# WCSS
+
+### Uncomment the following code to plot WCSS for each k.
+# plot(possible.k, WCSS, pch=17, type="o")
+
+```
+
+**Grading:**  2 pts.
+
+
+3.a)  What does the `nstart` parameter control about the algorithm? 
+
+
+**Response:** 
+
+
+**Grading:**  1 pt.
+
+
+3.b) Why is the `nstart` parameter necessary? 
+
+**Response:** 
+
+
+**Grading:**  1 pt.
+
+3.c)  In a sentence (and without getting into technicalities), what is the `WCSS` trying to measure about the clustering scheme?
+
+**Response:** 
+
+**Grading:**  1 pt.
+
+
+3.d)  We look at this "elbow plot" above to see if any clusters exist due to natural structure in the data.  In business analytics, individuals *rarely* naturally separate into distinct groups, and this case is no exception.  
+
+In the `idealWCSS` vector below, replace the 6 `NA` with actual numbers so that when `idealWCSS` is plotted vs `k` the natural structure in the data would clearly suggest 4 clusters.
+
+```{r Q3 ideal elbow}
+k <- 1:10
+idealWCSS <- c(2890.0, 2379.4, 1988.0, 1785.6, NA, NA, NA, NA, NA, NA)
+
+# Your code here:
+# idealWCSS <- ?
+
+# Plot the "ideal" elbow plot that suggests clearly 4 clusters.
+plot(idealWCSS~k,pch=17,cex=1)
+
+
+```
+
+**Grading:**  1 pt
+
+
+*************
+
+4)  Since there is no natural choice for the number of clusters here, let's choose k=6.  Run `kmeans` on `DATA_HW6_scale` with `centers=6`, `iter.max=30`, and `nstart=25`, left-arrowing the results in `KMEANS`.  
+
+4.a)  Print to the screen the contents of `round(KMEANS$centers,digits=1)` to see the locations of the cluster centers and `table(KMEANS$cluster)` to get a frequency table of how many individuals are in each cluster.   
+
+
+```{r}
+set.seed(1)
+
+## Your code here
+## KMEANS object:
+#KMEANS <- kmeans(?)
+
+## Look at 5 cluster centers:
+
+## Number of students in each cluster:
+
+```
+
+**Grading:**  3 pts
+
+
+4.b) Describe two cluster centers that differ from others.
+
+**Response:** 
+
+
+**Grading:**  2 pts. 
+
+
+****************************
+
+**Question 2.** Hierarchical clustering.
+
+this time. Run `hclust` with arguments `dist(DATA_HW6_scale)` and `method="complete"`. Provide a plot of the dendrogram. 
+
+```{r}
+set.seed(2022)
+# Your code here:
+
+# HC <- hclust(?)
+
+# plot(HC)
+
+```
+
+**Grading:** 1 point.
+
+6) Let's choose the number of clusters to be 10.
+
+Add columns `cluster_hc` to the dataframe `DATA_HW6_scale` which contain the cluster identities (found from `cutree`) when 10 clusters are found.
+
+How many students are there in each of the 10 clusters?
+
+
+```{r}
+# Your code here
+
+
+```
+
+
+**Grading:** 3 pt
+
+
+7) Using `aggregate`, find the average value of each column in `DATA_HW6_scale` broken down by `cluster_hc`(e.g. `aggregate(.~cluster_hc,data=DATA_HW6_scale,FUN=mean)`).  Put the `aggregate` command inside a `round()` function and print these averages to the screen to 2 digits. 
+
+
+```{r} 
+## Your code: (1 pt)
+
+```
+
+Discuss the average variable values from the cluster with most students.
+
+**Grading:** (2 pt)
+
